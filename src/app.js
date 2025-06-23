@@ -2,32 +2,21 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-app.use("/user", (req, res) => {
-  res.send("Hello User");
-});
+// syntax of route handlers
+// app.use("/route", [rH, rH], rH, rH)
 
-app.get("/user", (req, res) => {
-  res.send({ firstName: "Jai", SecondName: "Bharat" });
-});
-
-app.post("/user", (req, res) => {
-  res.send("Data successfully send to the database");
-});
-
-app.delete("/user", (req, res) => {
-  res.send("Data successfully deleted from the database");
-});
-
-app.use("/test", (req, res) => {
-  res.send("Hello, from Test!");
-});
-
-app.use("/hello", (req, res) => {
-  res.send("Hello, hello, hello...");
-});
-app.use("/", (req, res) => {
-  res.send("Hello, from Dashboard!");
-});
+app.use(
+  "/user",
+  (req, res, next) => {
+    console.log("route handler 1");
+    next();
+    res.send("Hello from user 1");
+  },
+  (req, res) => {
+    console.log("route handler 2");
+    res.send("Hello from user 2");
+  }
+);
 
 app.listen(port, () => {
   console.log(`Server is successfully listen at port ${port}`);
